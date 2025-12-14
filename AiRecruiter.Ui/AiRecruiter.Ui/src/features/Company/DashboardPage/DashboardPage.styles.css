@@ -1,0 +1,25 @@
+.barchart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    background: #fff;
+        padding: 36px;
+    border-radius: 0 0 8px 8px;
+}
+
+.piechart-container {
+    display: flex;
+    flex-direction: row;
+    gap: 36px;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+    background: #fff;
+        padding: 36px;
+    border-radius: 0 0 8px 8px;
+}
+
+.piechart {
+    text-align: center;
+}

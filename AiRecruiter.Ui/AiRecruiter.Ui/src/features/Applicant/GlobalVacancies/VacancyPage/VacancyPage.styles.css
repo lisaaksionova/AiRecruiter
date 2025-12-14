@@ -1,0 +1,60 @@
+.vacancy {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 25px 30px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.vacancy:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.vacancy h1 {
+  font-size: 1.8rem;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.vacancy p {
+  font-size: 1rem;
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+.vacancy .vacancy-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 6px 0;
+}
+
+.vacancy .stack-badge {
+  background-color: #e6f7ff;
+  color: #0050b3;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.vacancy .vacancy-footer {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vacancy .salary {
+  font-weight: bold;
+  color: #52c41a;
+}
+
+.vacancy .level {
+  font-style: italic;
+  color: #888;
+}

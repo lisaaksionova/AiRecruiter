@@ -1,0 +1,39 @@
+.candidate {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px 25px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.candidate:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.candidate h1 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.candidate p {
+  font-size: 1rem;
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+.candidate p:first-letter {
+  font-weight: bold;
+}
+
+.spin {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}

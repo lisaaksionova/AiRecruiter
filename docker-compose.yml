@@ -1,0 +1,84 @@
+services:
+  ui:
+    build:
+      context: ./AiRecruiter.Ui/AiRecruiter.Ui
+      dockerfile: ./Dockerfile
+    container_name: airecruiter-ui
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://api:5087
+      - VITE_MATCHER_URL=http://match-service:8000
+      - NODE_ENV=development
+    depends_on:
+      - api
+      - match-service
+    volumes:
+      - ./AiRecruiter.Ui/AiRecruiter.Ui:/usr/src/app
+      - ui_node_modules:/usr/src/app/node_modules
+    networks:
+      - airecruiter-network
+
+  api:
+    build:
+      context: ./AiRecruiter
+      dockerfile: ./Dockerfile
+    container_name: airecruiter-api
+    ports:
+      - "5087:5087"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:5087
+      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=AiRecruiter;Username=postgres;Password=password;
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - airecruiter-network
+
+  match-service:
+    build:
+      context: ./MatchService
+      dockerfile: ./Dockerfile
+    container_name: airecruiter-matcher
+    ports:
+      - "8000:8000"
+    environment:
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
+      - API_URL=http://api:5087
+    volumes:
+      - ./MatchService:/app
+    depends_on:
+      - api
+    networks:
+      - airecruiter-network
+
+  db:
+    image: postgres:17
+    container_name: airecruiter-db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=AiRecruiter
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - airecruiter-network
+
+volumes:
+  postgres_data:
+    driver: local
+  ui_node_modules:
+    driver: local
+
+networks:
+  airecruiter-network:
+    driver: bridge

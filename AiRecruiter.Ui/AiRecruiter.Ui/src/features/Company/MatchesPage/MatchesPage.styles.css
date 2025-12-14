@@ -1,0 +1,11 @@
+.match-select {
+    width: 250px;
+    margin: 0 16px;
+}
+.match-search {
+    width: 500px;
+    margin-right: 16px;
+}
+.match-table {
+    margin-top: 24px;
+}
