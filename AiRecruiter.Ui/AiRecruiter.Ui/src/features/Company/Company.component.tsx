@@ -6,6 +6,7 @@ import type { Vacancy, VacancyCreate } from "../../models/vacancy.model";
 import { useState } from "react";
 import create from "@ant-design/icons/lib/components/IconFont";
 import { useVacancyStore } from "../../stores/vacancy.store";
+import { useAuthStore } from "../../stores/auth.store";
 
 const { Header, Content, Footer } = Layout;
 
@@ -34,6 +35,7 @@ const Company = () => {
 
     const createVacancy = useVacancyStore((state) => state.createVacancy);
     const [modalOpen, setModalOpen] = useState(false);
+    const logout = useAuthStore((state) => state.logout);
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
@@ -70,6 +72,14 @@ const Company = () => {
                     style={{ marginLeft: "auto" }}
                 >
                     Create Vacancy
+                </Button>
+                <Button
+                    type="primary"
+                    danger
+                    onClick={logout}
+                    style={{ marginLeft: "12px" }}
+                >
+                    Logout
                 </Button>
             </Header>
             <Content style={{ padding: "0 48px" }}>

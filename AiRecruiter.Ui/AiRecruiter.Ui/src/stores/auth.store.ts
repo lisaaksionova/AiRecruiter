@@ -40,6 +40,10 @@ interface LoginRequest {
     password: string;
 }
 
+interface LogoutRequest {
+    token: string;
+}
+
 interface RegisterCandidateRequest {
     email: string;
     password: string;
@@ -67,7 +71,7 @@ interface AuthState {
     login: (data: LoginRequest) => Promise<void>;
     registerCandidate: (data: RegisterCandidateRequest) => Promise<void>;
     registerCompany: (data: RegisterCompanyRequest) => Promise<void>;
-    logout: () => void;
+    logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -122,8 +126,30 @@ export const useAuthStore = create<AuthState>((set) => ({
         }
     },
 
-    logout: () => {
-        localStorage.removeItem('token');
-        set({ role: null, error: null });
+    logout: async () => {
+        set({ loading: true, error: null });
+        try {
+            const token = localStorage.getItem('token');
+            if (token) {
+                await axios.post(`${API_URL.replace('/auth', '')}/Auth/logout-user`, { token });
+            }
+            localStorage.removeItem('token');
+            set({ 
+                user: null,
+                role: null,
+                loading: false 
+            });
+            window.location.href = '/';
+        } catch (error: any) {
+            console.error('Logout failed:', error);
+            // Clear local state even if request fails
+            localStorage.removeItem('token');
+            set({ 
+                user: null,
+                role: null,
+                loading: false 
+            });
+            window.location.href = '/';
+        }
     },
 }));

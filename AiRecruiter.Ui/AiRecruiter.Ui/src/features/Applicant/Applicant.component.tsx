@@ -1,6 +1,7 @@
-import { Layout, Menu, type MenuProps } from "antd";
+import { Layout, Menu, type MenuProps, Button } from "antd";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { Content, Footer, Header } from "antd/es/layout/layout";
+import { useAuthStore } from "../../stores/auth.store";
 
 const items = [
     { key: "1", label: "Offers", path: "/applicant/offers" },
@@ -23,6 +24,8 @@ const Applicant = () => {
             navigate(item.path);
         }
     };
+
+    const logout = useAuthStore((state) => state.logout);
 
     return (
         <Layout style={{ minHeight: "100vh" }}>
@@ -53,6 +56,14 @@ const Applicant = () => {
                     style={{ flex: 1, minWidth: 0 }}
                     onClick={handleMenuClick}
                 />
+                <Button
+                    type="primary"
+                    danger
+                    onClick={logout}
+                    style={{ marginLeft: "auto" }}
+                >
+                    Logout
+                </Button>
             </Header>
             <Content style={{ padding: "24px 48px" }}>
                 <Outlet />
